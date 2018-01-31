@@ -24,6 +24,7 @@ class RegistrationController extends Controller
 
         //$user = User::create(request(['name', 'email', 'password']));
 
+        dd(request('password'));
         $user = User::create(
             [
                 'name' => request('name'),

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\User;
+
 class SessionsController extends Controller
 {
     public function __construct()
@@ -31,7 +33,20 @@ class SessionsController extends Controller
                 'message' => "Invalid credentials"
             ]);
         }
+//
+//        return redirect()->home();
+//        $pwd = request('password');
+//
+//        $user = User::where('email', request('email'))->where('password', bcrypt('$pwd'))->first();
+//        dd($user);
+//        $token = $user->createToken('my token-')->accessToken;
+//
+//        return $token;
 
-        return redirect()->home();
+        if (auth()->attempt(request(['email', 'password']))) {
+            return User::where('email', request('email'))->first()->createToken('my token-')->accessToken;
+        } else {
+            return ["error" => "Invalid credentials"];
+        }
     }
 }
