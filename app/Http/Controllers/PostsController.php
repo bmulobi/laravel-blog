@@ -16,7 +16,25 @@ class PostsController extends Controller
     {
 //        $posts = Post::all();
         // also available - oldest() ASC
-        $posts = Post::latest()->get(); // DESC
+        // $posts = Post::latest()->get(); // DESC
+
+       /* $posts = Post::latest();
+
+        if ($month = request('month')) {
+            $posts->whereMonth('created_at', $month);
+        }
+
+        if ($year = request('year')) {
+            $posts->whereYear('created_at', $year);
+        }
+
+        $posts = $posts->get();
+       */
+
+       $posts = Post::latest()
+           ->filter(request(['month', 'year']))
+           ->get();
+
         return view('posts.index', compact('posts'));
     }
 
@@ -66,6 +84,8 @@ class PostsController extends Controller
         auth()->user()->publish(
             new Post(request(['title', 'body']))
         );
+
+        session()->flash('message', 'New post created');
 
         return redirect('/');
     }

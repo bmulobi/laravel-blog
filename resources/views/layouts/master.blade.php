@@ -14,12 +14,18 @@
 
     <!-- Custom styles for this template -->
     <link href="/css/app.css" rel="stylesheet">
+    <script src="/js/app.js"></script>
 </head>
 
 <body>
 
 @include ('layouts.nav')
 
+@if(session('message'))
+    <div id="flash-message" class="alert alert-success">
+        {{ session('message') }}
+    </div>
+@endif
 <div class="blog-header">
     <div class="container">
         <h1 class="blog-title">The Bootstrap Blog</h1>

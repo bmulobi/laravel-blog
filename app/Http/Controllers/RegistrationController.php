@@ -40,6 +40,8 @@ class RegistrationController extends Controller
 
         auth()->login($user);
 
+        session()->flash('message', 'You have registered successfully');
+
         return redirect()->home(); // same as redirect('/')
     }
 }
